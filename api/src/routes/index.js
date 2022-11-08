@@ -4,16 +4,22 @@ const { Router } = require('express');
 
 
 const router = Router();
+const videogamesRouter = require('./videogames.router')
 
 
+// router.get('/',(req,res)=>{
+//     res.send({msg:'hola'})
+// })
 
-function routerApi(app){
+router.use('/videogames',videogamesRouter)
 
-    const router =  router
-    app.use('api/v1',router)
+// function routerApi(app){
 
+//     const router =  router
+//     ro.use('api/v1',router)
+//     router.use('/videogames',videogamesRouter)
     
-}
+// }
 
 
 // Configurar los routers
