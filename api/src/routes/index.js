@@ -14,7 +14,7 @@ const { Router } = require('express');
 
 const router = Router();
 const videogamesRouter = require('./videogames.router')
-const genderRouter = require('./gender.router')
+const genderRouter = require('./genre.router')
 
 
 router.use('/videogames',videogamesRouter)
