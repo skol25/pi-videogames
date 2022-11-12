@@ -1,4 +1,5 @@
-const axios = require('axios')
+const axios = require('axios');
+const Videogame = require('../models/Videogame');
 require('dotenv').config();
 const {
     API_KEY
@@ -99,10 +100,29 @@ module.exports = {
         }
 
     },
-    createVideogame:async function(form){
 
+    /**
+     * 
+     * @param {obj} form 
+     * -name:string,
+     * -description:string,
+     * -released:string/date ,
+     * -rating:integer,
+     * -genres:[],
+     * -platforms:[]
+     */
+
+    createVideogame:async function(form){
+        let {name,description,released,rating,genres,platforms}=form
+        
         try {
-            
+            return form
+            const [videogame,created] = await Videogame.findOrCreated({
+                where:{name},
+                defaults:{
+                    name,description,released,rating,platforms
+                }
+            })
             //falta traer el videjuego y guardarlo en la base de datos 
 
         } catch (error) {

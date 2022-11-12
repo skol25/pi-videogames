@@ -18,7 +18,7 @@ const genderRouter = require('./genre.router')
 
 
 router.use('/videogames',videogamesRouter)
-router.use('/gender',genderRouter)
+router.use('/genres',genderRouter)
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
