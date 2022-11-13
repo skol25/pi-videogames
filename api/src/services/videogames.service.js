@@ -136,9 +136,6 @@ module.exports = {
     createVideogame:async function(form){
         let {name,description,released,rating,genres,platforms}=form
        
-        
-
-        
         try {
             //primero hay que traer los generos
             
@@ -149,14 +146,31 @@ module.exports = {
             let genresss = await genreService.listGenres()
 
             
-            let list =   genres.map(  e => {
-                return Genre.findOne({
+            let list =  await genres.map( async e => {
+                
+                console.log(e)
+
+                let ids =  await Genre.findOne({
                     where:{name:e},
-                    attributes:["id"]
+                    attributes:["id"],
+                    raw : true
                 })
+                return  ids
+                
            });
+
+
+            let promesa = await Promise.all(list).then((listgenres)=>{
+                let promiseArray=[]
+                listgenres.forEach(element => {
+                    promiseArray.push(element)
+                });
+                return Promise.all(promiseArray)
+            })
+        
+            console.log(promesa)
            
-           console.log(list)
+           
 
         
 

@@ -17,8 +17,7 @@ module.exports = {
             
             if(responseGenres.data.results.length!=0){
                 
-
-                let listFilterOfGneres = responseGenres.data.results.map( async genre => {
+                let listFilterOfGneres =  responseGenres.data.results.map( async genre => {
                    
                     let [genreCreated,Created] = await Genre.findOrCreate({
                         where: { id: genre.id },
@@ -33,6 +32,7 @@ module.exports = {
                    }
                     
                 })
+               
 
                 return Promise.all(listFilterOfGneres).then((listgenres)=>{
                     let promiseArray=[]
