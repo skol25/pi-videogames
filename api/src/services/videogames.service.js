@@ -1,6 +1,8 @@
 const axios = require('axios');
-const Videogame = require('../models/Videogame');
+const {Genre,Videogame} = require('../db')
+const genreService = require('../services/genres.service')
 require('dotenv').config();
+
 const {
     API_KEY
 } = process.env;
@@ -16,13 +18,15 @@ module.exports = {
     listVideogames: async function(name){
         
         try {
+            //si no viene el nombre del juego entonces los listo todos 
             if(!name){
                 const response= await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`)
             
             if(response){
+                //nos piden devolver name,img y generos (yo paso el id porque despues hay que buscar el detalle de ese videojuego y es por el id )
                 const filterlist = response.data.results.map(element=>{
                     return{
-                        id:element.id,
+                        id:element.id, 
                         name:element.name,
                         image:element.background_image,
                         genres:element.genres.map(genre=>{
@@ -48,7 +52,24 @@ module.exports = {
                 //el response devuelve un array y dicho caso que no venga con nada el array viene vacio 
                 if(response.data.results.length!=0){
                     
-                    return response.data.results
+
+                    let responseSlice = response.data.results.slice(0,15)
+                     
+                    //devuelve los 15 filtrados por el nombre
+                    return responseSlice.map(element=>{
+                        return{
+                            id:element.id, 
+                            name:element.name,
+                            image:element.background_image,
+                            genres:element.genres.map(genre=>{
+                                return {
+                                    id:genre.id,
+                                    name:genre.name
+                                }
+                            }),
+                        }
+
+                    })
                 }else{
     
                     throw Error(`el videojuego ${name} no fue encontrado.`)
@@ -114,8 +135,31 @@ module.exports = {
 
     createVideogame:async function(form){
         let {name,description,released,rating,genres,platforms}=form
+       
+        
+
         
         try {
+            //primero hay que traer los generos
+            
+            //primero taer los id de los generos que yo seleccione en el formulario
+            //genres = ['shooter','arcade'] traer esos id y setear en la tabla relacional el id del juego con cada genero
+            
+            //e es cada genero de la lista 
+            let genresss = await genreService.listGenres()
+
+            
+            let list =   genres.map(  e => {
+                return Genre.findOne({
+                    where:{name:e},
+                    attributes:["id"]
+                })
+           });
+           
+           console.log(list)
+
+        
+
             return form
             const [videogame,created] = await Videogame.findOrCreated({
                 where:{name},

@@ -14,7 +14,7 @@ module.exports = {
         try {
             //con esto me traigo todos los generos 
             let responseGenres = await axios.get(`https://api.rawg.io/api/genres?key=${API_KEY}`);
-            let responseArray=[]
+            
             if(responseGenres.data.results.length!=0){
                 
 
