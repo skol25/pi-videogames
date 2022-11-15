@@ -26,7 +26,7 @@ module.exports = {
             
             if(response){
                 //nos piden devolver name,img y generos (yo paso el id porque despues hay que buscar el detalle de ese videojuego y es por el id )
-                const filterlist = response.data.results.map(element=>{
+                let filterlist = response.data.results.map(element=>{
                     return{
                         id:element.id, 
                         name:element.name,
@@ -39,7 +39,7 @@ module.exports = {
                         }),
                     }
                 })
-                 filterlist = filterlist.data.results.slice(0,100)
+                 filterlist = filterlist.slice(0,100)
                 /**
                  * me traigo todos los videojuegos de la base de datos 
                  */
