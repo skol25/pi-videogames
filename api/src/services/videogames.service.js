@@ -39,7 +39,7 @@ module.exports = {
                         }),
                     }
                 })
-
+                 filterlist = filterlist.data.results.slice(0,100)
                 /**
                  * me traigo todos los videojuegos de la base de datos 
                  */
@@ -185,7 +185,7 @@ module.exports = {
                 
             })
 
-            console.log(idOfGenre)
+        
 
           const [videogame,created] = await Videogame.findOrCreate({
             where:{name},
