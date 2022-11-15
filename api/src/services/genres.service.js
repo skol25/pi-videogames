@@ -45,7 +45,7 @@ module.exports = {
                 
             }
             else{
-                throw Error('No hay nningun genero.')
+                throw Error('No hay ningun genero.')
             }
             
         } catch (error) {

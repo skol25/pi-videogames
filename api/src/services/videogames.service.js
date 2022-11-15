@@ -1,6 +1,8 @@
 const axios = require('axios');
-const {Genre,Videogame} = require('../db')
+const {Genre,Videogame,Platform} = require('../db')
 const genreService = require('../services/genres.service')
+const platformService = require('../services/platforms.service')
+const {Op}=require('sequelize')
 require('dotenv').config();
 
 const {
@@ -144,47 +146,67 @@ module.exports = {
             
             //e es cada genero de la lista 
             let genresss = await genreService.listGenres()
+            let platfroms = await platformService.listPlatforms()
+
+
+            //con esto me traigo los id de los generos que me viene selecionados del front 
+            let idOfGenre = await Genre.findAll({
+                attributes: ["id"],
+                where:{
+                    [Op.or]:{name:genres}
+                },
+                raw : true
+
+            })
+
+            //aqui me traigo los id de las plataformas 
+            let idOfPlatform = await Platform.findAll({
+                attributes : ["id"],
+                where:{
+                    [Op.or]:{name:platforms}
+                },
+                raw:true
+            })
 
             
-            let list =  await genres.map( async e => {
+            
+        //     let listOfId =  await genres.map( async e => {
                 
-                console.log(e)
-
-                let ids =  await Genre.findOne({
-                    where:{name:e},
-                    attributes:["id"],
-                    raw : true
-                })
-                return  ids
+        //          return  await Genre.findOne({
+        //             where:{name:e},
+        //             attributes:["id"],
+        //             raw : true
+        //         })
                 
-           });
+        //    });
+
+        //    //con esto ya tengo los id de los generos que busque de la base de datos 
+        //     let promesa = await Promise.all(listOfId).then((listgenres)=>{
+        //         let promiseArray=[]
+        //         listgenres.forEach(element => {
+        //             promiseArray.push(element)
+        //         });
+        //         return Promise.all(promiseArray)
+        //     })
+            
+            //ahora las plataformas ya las tengo 
+            //queda guardar los id con el id generado 
+            
 
 
-            let promesa = await Promise.all(list).then((listgenres)=>{
-                let promiseArray=[]
-                listgenres.forEach(element => {
-                    promiseArray.push(element)
-                });
-                return Promise.all(promiseArray)
-            })
-        
-            console.log(promesa)
+            
            
-           
-
-        
-
             return form
             const [videogame,created] = await Videogame.findOrCreated({
                 where:{name},
                 defaults:{
-                    name,description,released,rating,platforms
+                    name,description,released,rating
                 }
             })
             //falta traer el videjuego y guardarlo en la base de datos 
 
         } catch (error) {
-            throw Error('error al crear el videojuego.')
+            throw Error(error)
         }
 
     }

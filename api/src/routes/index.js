@@ -15,10 +15,12 @@ const { Router } = require('express');
 const router = Router();
 const videogamesRouter = require('./videogames.router')
 const genderRouter = require('./genre.router')
+const platformRouter = require('./platforms.router')
 
 
 router.use('/videogames',videogamesRouter)
 router.use('/genres',genderRouter)
+router.use('/platforms',platformRouter)
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);

@@ -5,7 +5,7 @@ const { DataTypes } = require('sequelize');
 
 /**
  * [ ] Videojuego con las siguientes propiedades:
- * @param {*id} sequelize No puede ser un ID de un videojuego ya existente en la API rawg
+ * @param {*id} sequelize
  * @param {*name} sequelize 
  *
  */
@@ -20,6 +20,7 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique:true
     },
   },{
     timestamps:false,

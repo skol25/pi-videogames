@@ -18,6 +18,14 @@ const { DataTypes, DATE } = require('sequelize');
 module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('videogame', {
+
+    id:{
+      type:DataTypes.UUID,
+            primaryKey:true,
+            defaultValue:DataTypes.UUIDV4,
+            allowNull:false
+    },
+
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -36,11 +44,6 @@ module.exports = (sequelize) => {
     rating: {
       type: DataTypes.INTEGER,
       defaultValue:0
-    },
-
-    plataforms: {
-      type:DataTypes.ENUM('summer','winter','spring','autumn'),
-      allowNull: false,
     },
   },
   {timestamps:true,
