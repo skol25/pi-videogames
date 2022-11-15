@@ -45,8 +45,12 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       defaultValue:0
     },
+    platforms: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false,
+    },
   },
-  {timestamps:true,
+  {timestamps:false,
     createdAt:false,
     updatedAt:false
 });

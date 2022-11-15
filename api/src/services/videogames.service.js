@@ -1,7 +1,7 @@
 const axios = require('axios');
-const {Genre,Videogame,Platform} = require('../db')
+const {Genre,Videogame} = require('../db')
 const genreService = require('../services/genres.service')
-const platformService = require('../services/platforms.service')
+
 const {Op}=require('sequelize')
 require('dotenv').config();
 
@@ -39,7 +39,36 @@ module.exports = {
                         }),
                     }
                 })
-                return filterlist
+
+                /**
+                 * me traigo todos los videojuegos de la base de datos 
+                 */
+                
+                let dbVideogames = await Videogame.findAll({
+                    attributes:["id","name"],
+                    
+                    include: {
+                        model:Genre,
+                        attributes:["name","id"],
+                        //esto hace que no agrege la de la tabla relacional
+                        through:{
+                            attributes:[]
+                        }
+                    }
+                   
+                })
+                
+
+               dbVideogames= dbVideogames.map(element => {
+                    let image={image:"https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e0aebcf5-946d-44a7-bb9e-62e9964adb2b/dapiflk-1d064c11-b366-4a64-9d24-30a650ba2847.png/v1/fill/w_1024,h_576,q_80,strp/gamecube_controller_minimalist_wallpaper_by_brulescorrupted_dapiflk-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc2IiwicGF0aCI6IlwvZlwvZTBhZWJjZjUtOTQ2ZC00NGE3LWJiOWUtNjJlOTk2NGFkYjJiXC9kYXBpZmxrLTFkMDY0YzExLWIzNjYtNGE2NC05ZDI0LTMwYTY1MGJhMjg0Ny5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.HNm253TIHOwbreSdXl4rIRMDuYigSQtJ0Pwv-9H6RHY"}
+                  return Object.assign(element.dataValues,image)
+                });
+
+                     let arrayToSend =[...dbVideogames,...filterlist]    
+
+
+
+                return arrayToSend
                 }
                 else{
                     throw Error('La data no fue encontrada')
@@ -146,8 +175,6 @@ module.exports = {
             
             //e es cada genero de la lista 
             let genresss = await genreService.listGenres()
-            let platfroms = await platformService.listPlatforms()
-
 
             //con esto me traigo los id de los generos que me viene selecionados del front 
             let idOfGenre = await Genre.findAll({
@@ -155,21 +182,28 @@ module.exports = {
                 where:{
                     [Op.or]:{name:genres}
                 },
-                raw : true
-
+                
             })
 
-            //aqui me traigo los id de las plataformas 
-            let idOfPlatform = await Platform.findAll({
-                attributes : ["id"],
-                where:{
-                    [Op.or]:{name:platforms}
-                },
-                raw:true
-            })
+            console.log(idOfGenre)
 
+          const [videogame,created] = await Videogame.findOrCreate({
+            where:{name},
+            defaults:{
+                name:name,
+                description:description,
+                releaseDate:released,
+                rating:rating,
+                platforms:platforms,
+            },
+            
+          })
+
+          videogame.addGenres(idOfGenre)
             
             
+
+
         //     let listOfId =  await genres.map( async e => {
                 
         //          return  await Genre.findOne({
@@ -196,15 +230,8 @@ module.exports = {
 
             
            
-            return form
-            const [videogame,created] = await Videogame.findOrCreated({
-                where:{name},
-                defaults:{
-                    name,description,released,rating
-                }
-            })
-            //falta traer el videjuego y guardarlo en la base de datos 
-
+            return videogame
+            
         } catch (error) {
             throw Error(error)
         }
