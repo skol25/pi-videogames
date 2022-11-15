@@ -20,9 +20,9 @@ module.exports = (sequelize) => {
   sequelize.define('videogame', {
 
     id:{
-      type:DataTypes.UUID,
+      type:DataTypes.STRING,
             primaryKey:true,
-            defaultValue:DataTypes.UUIDV4,
+            defaultValue:DataTypes.UUIDV1,
             allowNull:false
     },
 

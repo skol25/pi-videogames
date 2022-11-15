@@ -22,11 +22,24 @@ module.exports = {
         try {
             //si no viene el nombre del juego entonces los listo todos 
             if(!name){
+
+                //aqui me busco hasta que tenga 100 juegos 
                 const response= await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`)
-            
+
+                let arrayResponse=[...response.data.results]
+                while(arrayResponse.length<100){
+                    let url = response.data.next
+                    let responseTo= await axios.get(url)
+                   
+                    arrayResponse=[...arrayResponse,...responseTo.data.results]
+                }
+                
+                
+
             if(response){
+                
                 //nos piden devolver name,img y generos (yo paso el id porque despues hay que buscar el detalle de ese videojuego y es por el id )
-                let filterlist = response.data.results.map(element=>{
+                let filterlist = arrayResponse.map(element=>{
                     return{
                         id:element.id, 
                         name:element.name,
@@ -39,7 +52,8 @@ module.exports = {
                         }),
                     }
                 })
-                 filterlist = filterlist.slice(0,100)
+                 
+            
                 /**
                  * me traigo todos los videojuegos de la base de datos 
                  */
@@ -60,13 +74,22 @@ module.exports = {
                 
 
                dbVideogames= dbVideogames.map(element => {
-                    let image={image:"https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e0aebcf5-946d-44a7-bb9e-62e9964adb2b/dapiflk-1d064c11-b366-4a64-9d24-30a650ba2847.png/v1/fill/w_1024,h_576,q_80,strp/gamecube_controller_minimalist_wallpaper_by_brulescorrupted_dapiflk-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc2IiwicGF0aCI6IlwvZlwvZTBhZWJjZjUtOTQ2ZC00NGE3LWJiOWUtNjJlOTk2NGFkYjJiXC9kYXBpZmxrLTFkMDY0YzExLWIzNjYtNGE2NC05ZDI0LTMwYTY1MGJhMjg0Ny5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.HNm253TIHOwbreSdXl4rIRMDuYigSQtJ0Pwv-9H6RHY"}
-                  return Object.assign(element.dataValues,image)
+
+                    return {
+                        id:element.dataValues.id,
+                        name:element.dataValues.name,   
+                        image:"https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e0aebcf5-946d-44a7-bb9e-62e9964adb2b/dapiflk-1d064c11-b366-4a64-9d24-30a650ba2847.png/v1/fill/w_1024,h_576,q_80,strp/gamecube_controller_minimalist_wallpaper_by_brulescorrupted_dapiflk-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc2IiwicGF0aCI6IlwvZlwvZTBhZWJjZjUtOTQ2ZC00NGE3LWJiOWUtNjJlOTk2NGFkYjJiXC9kYXBpZmxrLTFkMDY0YzExLWIzNjYtNGE2NC05ZDI0LTMwYTY1MGJhMjg0Ny5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.HNm253TIHOwbreSdXl4rIRMDuYigSQtJ0Pwv-9H6RHY",
+                        genres:element.dataValues.genres
+                    }
+
+
+                //     let image={image:"https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e0aebcf5-946d-44a7-bb9e-62e9964adb2b/dapiflk-1d064c11-b366-4a64-9d24-30a650ba2847.png/v1/fill/w_1024,h_576,q_80,strp/gamecube_controller_minimalist_wallpaper_by_brulescorrupted_dapiflk-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc2IiwicGF0aCI6IlwvZlwvZTBhZWJjZjUtOTQ2ZC00NGE3LWJiOWUtNjJlOTk2NGFkYjJiXC9kYXBpZmxrLTFkMDY0YzExLWIzNjYtNGE2NC05ZDI0LTMwYTY1MGJhMjg0Ny5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.HNm253TIHOwbreSdXl4rIRMDuYigSQtJ0Pwv-9H6RHY"}
+                //   return Object.assign(element.dataValues,image)
                 });
 
-                     let arrayToSend =[...dbVideogames,...filterlist]    
+                let arrayToSend =[...dbVideogames,...filterlist]    
 
-
+                console.log(arrayToSend.length,'hay')
 
                 return arrayToSend
                 }
@@ -77,6 +100,10 @@ module.exports = {
             }
             else{
                 /*si viene el nombre del juego por query entonces */
+
+
+                
+
             
                 const response = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&search=${name}`)
 
@@ -85,7 +112,7 @@ module.exports = {
                     
 
                     let responseSlice = response.data.results.slice(0,15)
-                     
+       
                     //devuelve los 15 filtrados por el nombre
                     return responseSlice.map(element=>{
                         return{
@@ -124,9 +151,31 @@ module.exports = {
     * [ ] Plataformas listo
      */
     detailVideogame: async function(idVideogame){
-
+            
         try {
+        
+                //primero buscar en la base de datos el id 
+
+
+
+            let responseDB = await Videogame.findOne({
+                where:{id:idVideogame},
+                include: {
+                    model:Genre,
+                    attributes:["name","id"],
+                    //esto hace que no agrege la de la tabla relacional
+                    through:{
+                        attributes:[]
+                    }
+                }
+               
+            })
+
+
+            if(responseDB) return responseDB
+            
             const response = await axios.get(`https://api.rawg.io/api/games/${idVideogame}?key=${API_KEY}`)
+
             if(response.data){
                 let element = response.data
                 const detailVideogame = {
@@ -144,11 +193,14 @@ module.exports = {
                 return detailVideogame
             }
             else{
+
+
+
                 throw Error('El id no coincide con ningun juego guardado.')
             }
         } catch (error) {
            
-            throw Error(error.message)
+            throw Error(error)
         }
 
     },
