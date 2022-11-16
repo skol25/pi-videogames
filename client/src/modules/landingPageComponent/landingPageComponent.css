@@ -1,0 +1,13 @@
+.bg-lp{
+    background-image: url('../../shared/assets/globalImages/landingPageImage.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    min-height: 100vh;
+    color: rebeccapurple;
+    
+}
+.hola{
+    margin: 0px;
+    padding: 0px;
+}

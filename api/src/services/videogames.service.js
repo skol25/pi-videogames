@@ -89,7 +89,7 @@ module.exports = {
 
                 let arrayToSend =[...dbVideogames,...filterlist]    
 
-                console.log(arrayToSend.length,'hay')
+            
 
                 return arrayToSend
                 }
