@@ -2,18 +2,13 @@ import React from 'react';
 import './landingPageComponent.css';
 import * as actions from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux';
-
+import ButtonLpComponent from '../../shared/components/buttons/buttonLpComponent/buttonLpComponent';
 
 export default function LandingPage(){
 
   const disp = useDispatch()  
   let videogames = useSelector((state=>state.videogames))
-  // let click=(e)=>{
-  //   e.preventDefault() 
-  //   let data = disp(actions.getAllVideogames())
-  //   console.log(data)
-    
-  // }
+  
   let capture=()=>{
     console.log('click')
     disp(actions.getAllVideogames())
@@ -29,20 +24,17 @@ export default function LandingPage(){
   
   return (
     <React.Fragment>
-    <div className='bg-lp'>
+      
+    <div className='bg-lp center column-flex'>
+      <h2 className='PyM-0 tittle'>videogames</h2>
+        <div className='p-2'>
         
-        <h2 className='hola'>holaa</h2>
+        <ButtonLpComponent></ButtonLpComponent>
 
-        <button 
-          onClick={capture}
-        >click
-        </button>
-
-         <button 
-          onClick={capture2}
-        >click2
-        </button>
-    </div>
+        </div>
+        </div>
+    
+      
     </React.Fragment>
   )
 }

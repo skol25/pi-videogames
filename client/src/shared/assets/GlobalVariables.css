@@ -1,0 +1,20 @@
+:root{
+    --main-black:#000000;
+    --main-white:#ffffff;
+    --main-pink:#a51b6a;
+    --main-blue:#0060A7;
+}
+
+/* 
+* clases globales por multiples usos 
+*/
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.PyM-0{
+    padding: 0px;
+    margin: 0px;
+}

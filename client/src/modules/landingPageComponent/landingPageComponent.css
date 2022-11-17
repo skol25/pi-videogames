@@ -1,13 +1,27 @@
+@import url('../../shared/assets/GlobalVariables.css');
 .bg-lp{
-    background-image: url('../../shared/assets/globalImages/landingPageImage.jpg');
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../../shared/images/landingPageImage.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
     min-height: 100vh;
-    color: rebeccapurple;
+}
+.bg-op-white{
+    background-color: var(--main-black);
+    opacity: 0.5;
+}
+.tittle{
+    font-size:70px ;
+    font-weight: 800;
+    color: var(--main-white);
     
 }
-.hola{
-    margin: 0px;
-    padding: 0px;
+.column-flex{
+    display: flex;
+    flex-direction: column;
+}
+
+.p-2{
+    padding: 20px;
 }
