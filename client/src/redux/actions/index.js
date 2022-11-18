@@ -2,17 +2,14 @@ import axios from "axios";
 
 // Aca deben declarar las variables donde tengan el action types.
 export const GET_ALL_VIDEOGAMES = "GET_ALL_VIDEOGAMES";
-
-
-// Esten atentos a que los nombres de las variables coincidan.
-
-//
-// NOTA:
-//      Para obtener la informacion del detalle recorda utilizar la ruta http://localhost:3001/movies/:id
-//      Usar ruta 'http://localhost:3001/movies' para buscar todas las movies en nuestro back.
+export const CREATE_VIDEOGAME = "CREATE_VIDEOGAME";
+export const GET_ALL_GENRES = "GET_ALL_GENRES";
+export const GET_ALL_PLATFORMS = "GET_ALL_PLATFORMS";
+export const GET_DETAIL_VIDEOGAME = "GET_DETAIL_VIDEOGAME";
 
 
 
+/**rutas videogame */
 export const getAllVideogames = () => { 
     return function(dispatch){
 
@@ -22,26 +19,33 @@ export const getAllVideogames = () => {
     }
 };
 
-// export const getMovieDetail = (id) => {
-//     return function(dispatch){
-//         return fetch(`http://localhost:3001/movies/${id}`)
-//         .then(response=>response.json())
-//         .then(post=>dispatch({type:GET_MOVIE_DETAILS,payload:post}))
-//     }
-//  };
+export const createVideogame = (form) => {
+    return function(dispatch){
+        return axios.post('http://localhost:3001/api/v1/videogames',form)
+        .then(response => dispatch({type:CREATE_VIDEOGAME,payload:response}))
+    }
+}
 
-// export const createMovie = (movie) => {
-//     return {type:CREATE_MOVIE,payload:{...movie,id:id++}}
-//  };
+export const getDetailVideogame = (idVideogame)=>{
+    return function(dispatch){
+        return axios.get(`http://localhost:3001/api/v1/videogames/${idVideogame}`)
+        .then(response=>dispatch({type:GET_DETAIL_VIDEOGAME,payload:response}))
+    }
+}
 
-// // Desde el componente ejecutamos la action creator, pasandole como argumento el id de la movie que queremos eliminar.
-// export const deleteMovie = (id) => { 
+//rutas para llenar data 
+export const getAllGenres = () => {
+    return function(dispatch){
+        return axios.get('http://localhost:3001/api/v1/genres')
+        .then(response => dispatch({type:getAllGenres,payload:response}))
+    }
+}
 
-//     return{type:DELETE_MOVIE,payload:id}
 
-// };
+export const getAllPlatforms = () => {
+    return function(dispatch){
+        return axios.get('http://localhost:3001/api/v1/platforms')
+        .then(response => dispatch({type:getAllPlatforms,payload:response}))
+    }
+}
 
-// // Desde el componente ejecutamos la action creator, pasandole como argumento los values que vamos a utilizar para enviar el form de contacto.
-// export const sendEmail = (email) => {
-//     return {type: SEND_EMAIL, payload: email,}
-//  };
