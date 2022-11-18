@@ -14,13 +14,13 @@ export default function SideNavComponent() {
             tittle:'Home',
             path:'/home',
             image:iconHome,
-            css:'sidenav-text'
+            css:'text-nodecoration'
         },
         {
             tittle:'Create',
             path:'/home/Create',
             image:iconAdd,
-            css:'sidenav-text'
+            css:'text-nodecoration'
         },
 
     ]
@@ -29,15 +29,15 @@ export default function SideNavComponent() {
 // <img  src={item.image} alt='imagen'></img>
   return (
     <React.Fragment>
-        <nav className='sideNav'>
+        <nav className='sidenav'>
 
             <img src={burgerMenu} alt='icono de menu'  />
 
-            <ul className='sidenav-menu'>
+            <ul >
            
                 {sidenavData.map((item,index)=>{
                     return(
-                        <li key={index} className='sidenav-li' >
+                        <li key={index}>
                             <NavLink to={item.path} className={item.css}>
                                 {item.tittle}                        
                             </NavLink>
