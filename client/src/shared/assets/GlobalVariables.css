@@ -1,8 +1,14 @@
 :root{
-    --main-black:#000000;
+    
     --main-white:#ffffff;
-    --main-pink:#a51b6a;
+    --main-purple:#6c5ce7;
     --main-blue:#0060A7;
+    --main-black:#00000d;
+    --main-darkBlue:#072247;
+    --main-blueBg:#29468b;
+    --main-ligthPurple:#9b98ff;
+    --main-gray:#2e2e2e;
+   
 }
 
 /* 

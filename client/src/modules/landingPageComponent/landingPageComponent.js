@@ -3,24 +3,29 @@ import './landingPageComponent.css';
 import * as actions from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux';
 import ButtonLpComponent from '../../shared/components/buttons/buttonLpComponent/buttonLpComponent';
+import { useHistory } from 'react-router-dom';
 
-export default function LandingPage(){
 
-  const disp = useDispatch()  
-  let videogames = useSelector((state=>state.videogames))
-  
-  let capture=()=>{
-    console.log('click')
-    disp(actions.getAllVideogames())
-   
-    // disp(actions.getAllVideogames())
-  }
-  let capture2=()=>{
+export default function LandingPage(props){
+
+  // hook que ve el historial cuyo uso es para las rutas sin necesidad de hacerlo desde el html
+  const history = useHistory()
+  // const disp = useDispatch()  
+  // let videogames = useSelector((state=>state.videogames))
+  // disp(actions.getAllVideogames())
+
+
+
+  /**
+   * funcion que manda al home 
+   */
+  let sendToHome=()=>{
     
-    console.log(videogames)
+    history.push('/home')
+      
   }
   
-
+  
   
   return (
     <React.Fragment>
@@ -29,7 +34,7 @@ export default function LandingPage(){
       <h2 className='PyM-0 tittle'>videogames</h2>
         <div className='p-2'>
         
-        <ButtonLpComponent></ButtonLpComponent>
+        <ButtonLpComponent functo={sendToHome}></ButtonLpComponent>
 
         </div>
         </div>

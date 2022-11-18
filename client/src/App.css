@@ -1,3 +1,4 @@
+
 /* .App {
   text-align: center;
 }
@@ -53,4 +54,9 @@
     transform: rotate(360deg);
   }
 } */
+@import url('./shared/assets/GlobalVariables.css');
+.app{
+  display: flex;
+  background-color: var(--main-purple);
 
+}
