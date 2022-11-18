@@ -13,5 +13,6 @@ body{
 .content{
   background-color: var(--main-purple);
   width: 100%;
-  
+  padding: 2rem;
+
 }
