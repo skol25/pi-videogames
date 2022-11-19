@@ -20,10 +20,12 @@ export default function CreateVideogameComponent() {
 
   const disp = useDispatch()
   
-  let [genres,setGenres] = useState([])
-  let [platforms,setPlatforms] = useState([])
+  let [genres,setGenres] = useState(['pc','xbox'])
+  let [platforms,setPlatforms] = useState(['pc'])
 
   let allGenres = useSelector((state=>state.genres))
+  let allPlatforms = useSelector((state=>state.platforms))
+
 
   let [form,setfrom] = useState({
     name:'', //listo
@@ -34,6 +36,7 @@ export default function CreateVideogameComponent() {
     platforms:[]
   })
 
+
   useEffect(() => {
     disp(actions.getAllPlatforms())
     disp(actions.getAllGenres())
@@ -41,12 +44,13 @@ export default function CreateVideogameComponent() {
 }, [])
   useEffect(()=>{
     setGenres([...allGenres])
+    setPlatforms([...allGenres])
 
   },[])
     
 
   
-  let plataformas = [{name:'play',id:222},{name:'xbox',id:111},{name:'pc',id:33}]
+ 
 
   let handleChange=(e)=>{
     e.preventDefault()
@@ -86,13 +90,9 @@ export default function CreateVideogameComponent() {
           
           Generos:
           
-          <select   onChange={(e)=>handleChange(e)} >
+          <select   onChange={(e)=>handleChange(e)} multiple={true} 
+          >
 
-            {plataformas.map((item)=>{
-              return(
-                <option value={item.name}>{item.name}</option>
-              )
-            })}
           
           </select>
           
@@ -101,13 +101,16 @@ export default function CreateVideogameComponent() {
 
           <label className=''>
           
-          Plataformas:
+          plataformas:
           
-          <select value={form.platforms} onChange={(e)=>handleChange(e)}>
-            <option value="grapefruit">Grapefruit</option>
-            <option value="lime">Lime</option>
-            <option selected value="coconut">Coconut</option>
-            <option value="mango">Mango</option>
+          <select onChange={(e)=>handleChange(e)} multiple={true} value={['pc','xbox']} >
+
+            {platforms.map((item)=>{
+              return(
+                <option value={item.name}>{item.name}</option>
+              )
+            })}
+          
           </select>
 
           </label>
@@ -115,7 +118,9 @@ export default function CreateVideogameComponent() {
           <label className=''>
             Descripción:<input type={'text'} name={'description'} value={form.description} onChange={(e)=>handleChange(e)} />
           </label>
-
+          <textarea>
+            Hello there, this is some text in a text area
+          </textarea>
 
           <button type="submit">Create</button>
            
