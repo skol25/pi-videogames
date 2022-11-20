@@ -7,9 +7,19 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    
-    
+
 }
+
+.home-input{
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-white);
+
+}
+
+
 
 .home-card-block{
     margin: 5px;

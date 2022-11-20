@@ -15,12 +15,13 @@
 .card-image-block{
 
     position: relative;
-
+    
 }
+
 .card-image{
     border-radius: 5px;
     width: 100%;
-    height: 25%;
+    height: 100%;
 }
 
 .card-tittle{
