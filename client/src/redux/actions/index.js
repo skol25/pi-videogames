@@ -14,7 +14,11 @@ export const getAllVideogames = () => {
     return function(dispatch){
 
         return axios.get('http://localhost:3001/api/v1/videogames')
-        .then(response=>dispatch({type:GET_ALL_VIDEOGAMES,payload:response}))
+        .then(response=>dispatch({type:GET_ALL_VIDEOGAMES,payload:response.data}))
+        .catch((err)=>{
+
+            return err
+        })
        
     }
 };
@@ -22,14 +26,14 @@ export const getAllVideogames = () => {
 export const createVideogame = (form) => {
     return function(dispatch){
         return axios.post('http://localhost:3001/api/v1/videogames',form)
-        .then(response => dispatch({type:CREATE_VIDEOGAME,payload:response}))
+        .then(response => dispatch({type:CREATE_VIDEOGAME,payload:response.data}))
     }
 }
 
 export const getDetailVideogame = (idVideogame)=>{
     return function(dispatch){
         return axios.get(`http://localhost:3001/api/v1/videogames/${idVideogame}`)
-        .then(response=>dispatch({type:GET_DETAIL_VIDEOGAME,payload:response}))
+        .then(response=>dispatch({type:GET_DETAIL_VIDEOGAME,payload:response.data}))
     }
 }
 
@@ -37,7 +41,7 @@ export const getDetailVideogame = (idVideogame)=>{
 export const getAllGenres = () => {
     return function(dispatch){
         return axios.get('http://localhost:3001/api/v1/genres')
-        .then(response => dispatch({type:getAllGenres,payload:response}))
+        .then(response => dispatch({type:getAllGenres,payload:response.data}))
     }
 }
 
@@ -45,7 +49,7 @@ export const getAllGenres = () => {
 export const getAllPlatforms = () => {
     return function(dispatch){
         return axios.get('http://localhost:3001/api/v1/platforms')
-        .then(response => dispatch({type:getAllPlatforms,payload:response}))
+        .then(response => dispatch({type:getAllPlatforms,payload:response.data}))
     }
 }
 

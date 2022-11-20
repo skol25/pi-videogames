@@ -3,7 +3,7 @@
 
 .sidenav{
     width: 14rem;
-    height: calc(100vh - 52px);
+    height: auto;
     border-right: 1px solid purple;
     background-color: var(--main-gray);
 

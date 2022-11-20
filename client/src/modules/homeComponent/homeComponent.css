@@ -1,7 +1,16 @@
 @import url('../../shared/assets/GlobalVariables.css');
 
-.negro{
-    background-color: black;
+.container{
     width: 100%;
-    height: 100vh;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    
+    
+}
+
+.home-card-block{
+    margin: 5px;
 }

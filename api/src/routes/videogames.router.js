@@ -25,7 +25,7 @@ router.get('/',async (req,res)=>{
         try {
                 let {name} = req.query
                 let listVideogames = await videogamesService.listVideogames(name)
-                res.json(listVideogames)  
+                res.status(200).json(listVideogames)  
 
         } catch (error) {
                 

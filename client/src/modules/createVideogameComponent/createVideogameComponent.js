@@ -20,8 +20,8 @@ export default function CreateVideogameComponent() {
 
   const disp = useDispatch()
   
-  let [genres,setGenres] = useState(['pc','xbox'])
-  let [platforms,setPlatforms] = useState(['pc'])
+  let [genres,setGenres] = useState([])
+  let [platforms,setPlatforms] = useState([])
 
   let allGenres = useSelector((state=>state.genres))
   let allPlatforms = useSelector((state=>state.platforms))
@@ -44,13 +44,10 @@ export default function CreateVideogameComponent() {
 }, [])
   useEffect(()=>{
     setGenres([...allGenres])
-    setPlatforms([...allGenres])
+    setPlatforms([...allPlatforms])
 
   },[])
     
-
-  
- 
 
   let handleChange=(e)=>{
     e.preventDefault()
@@ -58,6 +55,7 @@ export default function CreateVideogameComponent() {
     newform[e.target.name] = e.target.value
     setfrom((prev)=>({...prev,[e.target.name]:e.target.value})) 
 }
+
 
   let handleSubmit=(e)=>{
     e.preventDefault()  
@@ -92,7 +90,12 @@ export default function CreateVideogameComponent() {
           
           <select   onChange={(e)=>handleChange(e)} multiple={true} 
           >
-
+          {genres.map((item)=>{
+            return(
+              <option value={item.name}>{item.name}</option>
+            )
+          })}
+        
           
           </select>
           

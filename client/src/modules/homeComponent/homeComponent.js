@@ -1,46 +1,47 @@
 import React, { useEffect, useState } from 'react'
-import {  useSelector } from 'react-redux'
+import {  useDispatch, useSelector } from 'react-redux'
+import { getAllVideogames } from '../../redux/actions'
+
 import CardComponent from '../../shared/components/cardComponent/cardComponent'
 import './homeComponent.css'
 
-
-
-
 export default function HomeComponent() {
+
+  const disp = useDispatch()
+
   
-  let response = useSelector((state)=>state.videogames)
-  let [videogames,setvideogames] = useState()
+   let getVideogames = useSelector((state) => state.videogames)
 
- let responsetest=[{
-  "id": 3498,
-  "name": "Grand Theft Auto V",
-  "image": "https://media.rawg.io/media/games/456/456dea5e1c7e3cd07060c14e96612001.jpg",
-  "genres": [
-      {
-          "id": 4,
-          "name": "Action"
-      },
-      {
-          "id": 3,
-          "name": "Adventure"
-      }
-  ]
-}]
+  let [allVideogames,setvideogames] = useState([])
   
- 
 
-let click = ()=>{
-    console.log(videogames)
-}
+  useEffect(()=>{
 
+    disp(getAllVideogames())
+    
+  },[])
+
+ let click = ()=>{
+  console.log()
+ }
+
+
+  
   return (
     <React.Fragment>
+    
       <div className='container'>  
-      
-      <p>home</p>
-        
-        
-        
+        { getVideogames && getVideogames.map( (videogame) => {
+
+          return(
+            <div className='home-card-block'>
+            <CardComponent id={videogame.id} name={videogame.name} image={videogame.image}  genres={videogame.genres} />
+
+            </div>
+
+          );
+
+        })}
       </div>
     </React.Fragment>
   )

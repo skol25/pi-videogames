@@ -14,5 +14,6 @@ body{
   background-color: var(--main-purple);
   width: 100%;
   padding: 2rem;
+  height: 100%;
 
 }
