@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import {  useDispatch, useSelector } from 'react-redux'
 import { getAllVideogames } from '../../redux/actions'
+import ButtonLpComponent from '../../shared/components/buttons/buttonLpComponent/buttonLpComponent'
 
 import CardComponent from '../../shared/components/cardComponent/cardComponent'
+import InputSearchComponent from '../../shared/components/inputs/inputSearchComponent/inputSearchComponent'
+import PaginationComponent from '../../shared/components/paginationComponent/paginationComponent'
 import SpinnerComponent from '../../shared/components/spinnerComponent/spinnerComponent'
 
 import searchIcon from '../../shared/images/icons/searchIcon.svg'
@@ -12,25 +15,38 @@ import './homeComponent.css'
 export default function HomeComponent() {
 
   const disp = useDispatch()
-  let [spinner,setSpinner] = useState(true)
-  let [allVideogames,setvideogames] = useState([])
-  let [search,setSearch] = useState([])
+  let [spinner,setSpinner] = useState(true) //state del spinner
+  let [search,setSearch] = useState() //state para el input 
+  let numberPerpage = 15
 
-
+  let [page,setpage] = useState(1)
+  
+  
 
    let getVideogames = useSelector((state) => state.videogames)
 
+   let lastPage = parseInt(getVideogames.length / numberPerpage) 
+   
+  
    useEffect(()=>{
     (async () => {
-      const data = await disp(getAllVideogames());
+      await disp(getAllVideogames());
+      
       
       setSpinner(false);
-      
    })();
 
-   } ,[disp,allVideogames])
+   } ,[disp])
 
 
+   let pagin = (n)=>{
+
+    console.log(n)
+     setpage(n)
+     console.log(page)
+
+    
+   }
   
   // useEffect(()=>{
     
@@ -40,20 +56,24 @@ export default function HomeComponent() {
   
 
   // },[disp,allVideogames])
-
-
-  
   return (
     <React.Fragment>
-      <div className='home-input'>
-        <input className='home-input-'/>
-        <img src={searchIcon} />     
-      </div>
+      <ButtonLpComponent functo={pagin} textbutton={'click'}/>
       {spinner && <SpinnerComponent/>}
-    
-      <div className='container'>  
+      <InputSearchComponent searchValue={search} setSearchValue={setSearch} placeHolder={'Skyrim...'}/>
+        
+      
+      <div className='home-container'>
+        <PaginationComponent numberGames={getVideogames.length} numberPerPage={numberPerpage} pageFunction={pagin}/>
+        </div>
+        <div className='container'>  
 
-        { getVideogames && getVideogames.map( (videogame) => {
+        { getVideogames && getVideogames.slice(
+
+          (page * numberPerpage),
+          (page * numberPerpage) + numberPerpage
+
+        ).map( (videogame) => {
 
           return(
             <div className='home-card-block'>
@@ -63,7 +83,11 @@ export default function HomeComponent() {
           );
 
         })}
-      </div>
+        </div>
+      
+      
+     
+      
     </React.Fragment>
   )
 }

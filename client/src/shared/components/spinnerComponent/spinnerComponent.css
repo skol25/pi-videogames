@@ -1,8 +1,9 @@
+@import url('../../assets/GlobalVariables.css');
 .spiner-bg{
     top: 0;
     right: 0;
-    position: absolute;
-    background-color: white;
+    position: fixed;
+    background-color: var(--main-gray);
     display: flex;
     justify-content: center;
     align-items: center;

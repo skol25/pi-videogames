@@ -11,7 +11,7 @@ body{
   display: flex;
 }
 .content{
-  background-color: var(--main-purple);
+  background-color: #6555e0;
   width: 100%;
   padding: 2rem;
   height: 100%;

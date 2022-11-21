@@ -34,7 +34,7 @@ export default function LandingPage(props){
       <h2 className='PyM-0 tittle'>videogames</h2>
         <div className='p-2'>
         
-        <ButtonLpComponent functo={sendToHome}></ButtonLpComponent>
+        <ButtonLpComponent functo={sendToHome} textbutton={'INICIO'}></ButtonLpComponent>
 
         </div>
         </div>

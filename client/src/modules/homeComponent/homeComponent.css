@@ -10,17 +10,9 @@
 
 }
 
-.home-input{
-    width: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--main-white);
-
-}
-
 
 
 .home-card-block{
     margin: 5px;
+    display: flex;
 }
