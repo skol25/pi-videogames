@@ -16,7 +16,7 @@ export default function PaginationComponent({numberGames,numberPerPage,pageFunct
     {pages.map((number)=>{
         return(
             <div className='pagination-button'>
-                <ButtonLpComponent textbutton={number} functo={()=>pageFunction(number-1)} />
+                <ButtonLpComponent textbutton={number} functo={()=>pageFunction(number)} />
                 
             </div>
 

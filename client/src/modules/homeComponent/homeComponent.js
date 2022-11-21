@@ -4,6 +4,7 @@ import { getAllVideogames } from '../../redux/actions'
 import ButtonLpComponent from '../../shared/components/buttons/buttonLpComponent/buttonLpComponent'
 
 import CardComponent from '../../shared/components/cardComponent/cardComponent'
+import CoverNotfoundComponent from '../../shared/components/coverNotfoundComponent/coverNotfoundComponent'
 import InputSearchComponent from '../../shared/components/inputs/inputSearchComponent/inputSearchComponent'
 import PaginationComponent from '../../shared/components/paginationComponent/paginationComponent'
 import SpinnerComponent from '../../shared/components/spinnerComponent/spinnerComponent'
@@ -40,12 +41,7 @@ export default function HomeComponent() {
 
 
    let pagin = (n)=>{
-
-    console.log(n)
      setpage(n)
-     console.log(page)
-
-    
    }
   
   // useEffect(()=>{
@@ -62,16 +58,22 @@ export default function HomeComponent() {
       {spinner && <SpinnerComponent/>}
       <InputSearchComponent searchValue={search} setSearchValue={setSearch} placeHolder={'Skyrim...'}/>
         
-      
+
       <div className='home-container'>
-        <PaginationComponent numberGames={getVideogames.length} numberPerPage={numberPerpage} pageFunction={pagin}/>
+        
+         {getVideogames.length==0 && <CoverNotfoundComponent />}
+
+
+
+        {getVideogames &&  <PaginationComponent numberGames={getVideogames.length} numberPerPage={numberPerpage} pageFunction={pagin}/>}
+       
         </div>
         <div className='container'>  
 
         { getVideogames && getVideogames.slice(
 
-          (page * numberPerpage),
-          (page * numberPerpage) + numberPerpage
+          ((page - 1) * numberPerpage),
+          ((page - 1)  * numberPerpage) + numberPerpage
 
         ).map( (videogame) => {
 
