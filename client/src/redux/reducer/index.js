@@ -6,8 +6,6 @@ const initialState ={
 
 }
 
-
-
 export default function rootReducer(state=initialState,action){
     switch(action.type){
        case 'GET_ALL_VIDEOGAMES' :
@@ -24,7 +22,8 @@ export default function rootReducer(state=initialState,action){
 
         case 'GET_ALL_GENRES':
             return{
-                ...state,genres:[...state.genres,{...action.payload}]
+                ...state,
+                genres:action.payload
             }
 
         case 'GET_ALL_PLATFORMS':

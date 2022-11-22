@@ -9,4 +9,5 @@ export default function ButtonLpComponent({functo, textbutton}) {
         {textbutton}
     </button>
   )
+  
 }

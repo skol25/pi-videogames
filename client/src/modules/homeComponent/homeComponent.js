@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {  useDispatch, useSelector } from 'react-redux'
-import { getAllVideogames } from '../../redux/actions'
+import { getAllGenres, getAllVideogames } from '../../redux/actions'
 import ButtonLpComponent from '../../shared/components/buttons/buttonLpComponent/buttonLpComponent'
 
 import CardComponent from '../../shared/components/cardComponent/cardComponent'
 import CoverNotfoundComponent from '../../shared/components/coverNotfoundComponent/coverNotfoundComponent'
 import InputSearchComponent from '../../shared/components/inputs/inputSearchComponent/inputSearchComponent'
+import InputSelectComponent from '../../shared/components/inputs/inputSelectComponent/inputSelectComponent'
 import PaginationComponent from '../../shared/components/paginationComponent/paginationComponent'
 import SpinnerComponent from '../../shared/components/spinnerComponent/spinnerComponent'
 
@@ -16,71 +17,235 @@ import './homeComponent.css'
 export default function HomeComponent() {
 
   const disp = useDispatch()
+
+  let [videogames,setvideogames] = useState([])
+
+
   let [spinner,setSpinner] = useState(true) //state del spinner
   let [search,setSearch] = useState() //state para el input 
-  let numberPerpage = 15
+  let numberPerpage = 15 //numero de videojuegos por pagina
 
-  let [page,setpage] = useState(1)
+
+  
+
+  let getVideogames = useSelector((state) => state.videogames) //busca el estado global de los videojuegos 
+  let[videogameO,setvideogameO] = useState()
+  
+  let getGenres = useSelector((state) => state.genres) //busca el estado global de los generos 
+
   
   
-
-   let getVideogames = useSelector((state) => state.videogames)
-
-   let lastPage = parseInt(getVideogames.length / numberPerpage) 
    
   
    useEffect(()=>{
     (async () => {
+
       await disp(getAllVideogames());
-      
+      await disp(getAllGenres())
       
       setSpinner(false);
    })();
 
-   } ,[disp])
+   } ,[disp,])
 
 
-   let pagin = (n)=>{
-     setpage(n)
-   }
-  
-  // useEffect(()=>{
+   useEffect(()=>{
+
     
-   
-  //   disp(getAllVideogames())
-  //   setvideogames(getVideogames)
-  
+    setvideogames(getVideogames.slice(0,15))
+    setvideogameO(getVideogames)
 
-  // },[disp,allVideogames])
+   },[getVideogames])
+
+   /**
+    * funcionalidades para los componentes
+    */
+
+
+   let sortZA = ()=>{
+    //obtengo el valor con genre.target.value ya es un input 
+    setvideogames(
+      videogameO.sort((a,b)=>{
+
+        let nameA = a.name.toUpperCase()
+        let nameB = b.name.toUpperCase()
+        
+        if(nameA > nameB){
+          return -1
+        }
+
+        if(nameA < nameB){
+          return 1
+        }
+
+          return 0
+        
+      }).slice(
+        ((1 - 1) * numberPerpage),
+      ((1 - 1)  * numberPerpage) + numberPerpage
+      )
+    )
+ }
+
+ let reset =async (e)=>{
+  setSpinner(true);
+  await disp(getAllVideogames())
+  setSpinner(false);
+ }
+
+ /**
+  * filtros de rating 
+  */
+ let sortRating05=()=>{
+
+  setvideogames(
+    videogameO.sort((a,b)=>{
+
+      let nameA = a.rating
+      let nameB = b.rating
+      
+      if(nameA < nameB){
+        return -1
+      }
+
+      if(nameA > nameB){
+        return 1
+      }
+
+        return 0
+      
+    }).slice(
+      ((1 - 1) * numberPerpage),
+    ((1 - 1)  * numberPerpage) + numberPerpage
+    )
+  )
+ }
+
+ let sortRating50=()=>{
+
+  setvideogames(
+    videogameO.sort((a,b)=>{
+
+      let nameA = a.rating
+      let nameB = b.rating
+      
+      if(nameA > nameB){
+        return -1
+      }
+
+      if(nameA < nameB){
+        return 1
+      }
+
+        return 0
+      
+    }).slice(
+      ((1 - 1) * numberPerpage),
+    ((1 - 1)  * numberPerpage) + numberPerpage
+    )
+  )
+ }
+
+
+   let sortAZ = ()=>{
+      //obtengo el valor con genre.target.value ya es un input 
+      setvideogames(
+        videogameO.sort((a,b)=>{
+
+          let nameA = a.name.toUpperCase()
+          let nameB = b.name.toUpperCase()
+          
+          if(nameA < nameB){
+            return -1
+          }
+
+          if(nameA > nameB){
+            return 1
+          }
+
+            return 0
+          
+        }).slice(
+          ((1 - 1) * numberPerpage),
+        ((1 - 1)  * numberPerpage) + numberPerpage
+        )
+      )
+   }
+
+   let sortDBtrue=()=>{
+    setvideogames(
+      videogameO.filter((a)=>a.db===true).slice(
+        ((1 - 1) * numberPerpage),
+      ((1 - 1)  * numberPerpage) + numberPerpage
+      )
+    )
+   }
+   let sortDBfalse=()=>{
+    setvideogames(
+      videogameO.filter((a)=>a.db===false).slice(
+        ((1 - 1) * numberPerpage),
+      ((1 - 1)  * numberPerpage) + numberPerpage
+      )
+    )
+   }
+
+
+   let pagin = async(n)=>{
+    setvideogames(
+      videogameO.slice(
+        ((n - 1) * numberPerpage),
+        ((n - 1)  * numberPerpage) + numberPerpage
+      )
+    ) 
+  }
+    let selectGenreSort=(genre)=>{
+     
+
+      setvideogames(
+        videogameO.filter((item)=> item.genres.map((e)=>{
+          return e.name
+        })
+        .includes(genre.target.value)
+        
+      ).slice(
+        ((0) * numberPerpage),
+        ((0)  * numberPerpage) + numberPerpage
+      )
+      )
+    }
+ 
+
   return (
     <React.Fragment>
-      <ButtonLpComponent functo={pagin} textbutton={'click'}/>
       {spinner && <SpinnerComponent/>}
       <InputSearchComponent searchValue={search} setSearchValue={setSearch} placeHolder={'Skyrim...'}/>
+      <InputSelectComponent contentSelect={getGenres} selectFunction={selectGenreSort} />
+      <button onClick={sortAZ}> A-Z</button>
+      <button onClick={sortZA}> Z-A</button>
+      <button onClick={sortRating05}> 0-5</button>
+      <button onClick={sortDBtrue}>creados</button>
+      <button onClick={sortDBfalse}>no creados</button>
+      
+      <ButtonLpComponent functo={sortRating50} textbutton={'5-0'} />
+      <button onClick={reset}> Reset</button>
         
 
       <div className='home-container'>
         
-         {getVideogames.length==0 && <CoverNotfoundComponent />}
+        {getVideogames.length===0 && <CoverNotfoundComponent />}
 
 
 
-        {getVideogames &&  <PaginationComponent numberGames={getVideogames.length} numberPerPage={numberPerpage} pageFunction={pagin}/>}
+        {videogames &&  <PaginationComponent numberGames={getVideogames.length} numberPerPage={numberPerpage} pageFunction={pagin}/>}
        
         </div>
         <div className='container'>  
 
-        { getVideogames && getVideogames.slice(
-
-          ((page - 1) * numberPerpage),
-          ((page - 1)  * numberPerpage) + numberPerpage
-
-        ).map( (videogame) => {
+        { getVideogames && videogames.map( (videogame) => {
 
           return(
             <div className='home-card-block'>
-            <CardComponent id={videogame.id} name={videogame.name} image={videogame.image}  genres={videogame.genres} />
-
+              <CardComponent key={videogame.id} id={videogame.id} name={videogame.name} image={videogame.image}  genres={videogame.genres} />
             </div>
           );
 

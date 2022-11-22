@@ -41,7 +41,10 @@ export const getDetailVideogame = (idVideogame)=>{
 export const getAllGenres = () => {
     return function(dispatch){
         return axios.get('http://localhost:3001/api/v1/genres')
-        .then(response => dispatch({type:getAllGenres,payload:response.data}))
+        .then(response => dispatch({type:GET_ALL_GENRES,payload:response.data.data}))
+        .catch((err)=>{
+            return err
+        })
     }
 }
 
@@ -49,7 +52,7 @@ export const getAllGenres = () => {
 export const getAllPlatforms = () => {
     return function(dispatch){
         return axios.get('http://localhost:3001/api/v1/platforms')
-        .then(response => dispatch({type:getAllPlatforms,payload:response.data}))
+        .then(response => dispatch({type:GET_ALL_PLATFORMS,payload:response.data}))
     }
 }
 
