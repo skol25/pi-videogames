@@ -1,6 +1,5 @@
 import React from 'react'
 import './inputSearchComponent.css'
-import iconSearch from '../../../images/icons/searchIcon.svg'
 
 export default function InputSearchComponent({searchValue,setSearchValue,placeHolder}) {
 

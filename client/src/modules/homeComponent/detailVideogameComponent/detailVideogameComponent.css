@@ -1,0 +1,14 @@
+@import url('../../../shared/assets/GlobalVariables.css');
+
+.detail-bg{
+    background-color: var(--main-gray);
+    display: inline-block;
+    max-width: 240px;
+    
+}
+
+.detail-image{
+    max-width: 20px;
+    
+
+}

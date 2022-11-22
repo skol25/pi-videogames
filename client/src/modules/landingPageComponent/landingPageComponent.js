@@ -1,7 +1,5 @@
 import React from 'react';
 import './landingPageComponent.css';
-import * as actions from '../../redux/actions'
-import { useDispatch, useSelector } from 'react-redux';
 import ButtonLpComponent from '../../shared/components/buttons/buttonLpComponent/buttonLpComponent';
 import { useHistory } from 'react-router-dom';
 

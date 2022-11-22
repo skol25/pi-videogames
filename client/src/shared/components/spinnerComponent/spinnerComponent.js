@@ -5,7 +5,7 @@ export default function SpinnerComponent() {
   return (
     <React.Fragment>
       <div className='spiner-bg'>
-
+      
       <div class="spinner">
         <div class="dot1"></div>
         <div class="dot2"></div>

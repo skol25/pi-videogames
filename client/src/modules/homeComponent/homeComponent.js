@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {  useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { getAllGenres, getAllVideogames } from '../../redux/actions'
 import ButtonLpComponent from '../../shared/components/buttons/buttonLpComponent/buttonLpComponent'
 
@@ -10,12 +11,11 @@ import InputSelectComponent from '../../shared/components/inputs/inputSelectComp
 import PaginationComponent from '../../shared/components/paginationComponent/paginationComponent'
 import SpinnerComponent from '../../shared/components/spinnerComponent/spinnerComponent'
 
-import searchIcon from '../../shared/images/icons/searchIcon.svg'
 
 import './homeComponent.css'
 
 export default function HomeComponent() {
-
+  const history = useHistory()
   const disp = useDispatch()
 
   let [videogames,setvideogames] = useState([])
@@ -213,6 +213,13 @@ export default function HomeComponent() {
       )
       )
     }
+
+    let openDetail = (videogameId)=>{
+
+      
+      history.push(`home/detail/${videogameId}`)
+
+    }
  
 
   return (
@@ -220,6 +227,7 @@ export default function HomeComponent() {
       {spinner && <SpinnerComponent/>}
       <InputSearchComponent searchValue={search} setSearchValue={setSearch} placeHolder={'Skyrim...'}/>
       <InputSelectComponent contentSelect={getGenres} selectFunction={selectGenreSort} />
+      
       <button onClick={sortAZ}> A-Z</button>
       <button onClick={sortZA}> Z-A</button>
       <button onClick={sortRating05}> 0-5</button>
@@ -244,7 +252,7 @@ export default function HomeComponent() {
         { getVideogames && videogames.map( (videogame) => {
 
           return(
-            <div className='home-card-block'>
+            <div className='home-card-block' onClick={()=>openDetail(videogame.id)}>
               <CardComponent key={videogame.id} id={videogame.id} name={videogame.name} image={videogame.image}  genres={videogame.genres} />
             </div>
           );

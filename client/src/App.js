@@ -1,8 +1,9 @@
 import React from 'react';
-import { Route, Router } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import './App.css';
 import CreateVideogameComponent from './modules/createVideogameComponent/createVideogameComponent';
 import HeaderComponent from './modules/headerComponent/headerComponent';
+import DetailVideogameComponent from './modules/homeComponent/detailVideogameComponent/detailVideogameComponent';
 
 //componentes 
 import HomeComponent from './modules/homeComponent/homeComponent';
@@ -20,6 +21,7 @@ function App() {
 
         <div className='content'>
           <Route exact path={'/home'} component={HomeComponent}/>
+          <Route exact path={'/home/Detail/:id'} component={DetailVideogameComponent}/>
           <Route exact path={'/home/create'} component={CreateVideogameComponent}/>
         </div>
 
