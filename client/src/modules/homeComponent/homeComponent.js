@@ -197,7 +197,6 @@ export default function HomeComponent() {
   }
 
     let selectGenreSort= async (genre)=>{
-        genre.preventDefault()
       setSpinner(true)
       await disp(getAllVideogames())
       
@@ -238,11 +237,18 @@ export default function HomeComponent() {
         <InputSelectComponent contentSelect={getGenres} selectFunction={selectGenreSort}  textDefault={'selecciona un genero'}/>
       
       <div className='home-filter-buttons'>
-        <div>
+        <div className='home-filter-buttons'>
+          <div className=''>
+
           <ButtonLpComponent functo={sortZA} textbutton={'Z-A'} />
           <ButtonLpComponent functo={sortAZ} textbutton={'A-Z'} />
+
+          </div>
+          <div className=''>
+
           <ButtonLpComponent functo={sortRating50} textbutton={'5-0'} />
           <ButtonLpComponent functo={sortRating05} textbutton={'0-5'} />
+          </div>
 
         </div>
         <div>
