@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ButtonLpComponent from '../buttons/buttonLpComponent/buttonLpComponent'
 import './paginationComponent.css'
 
@@ -6,9 +6,17 @@ export default function PaginationComponent({numberGames,numberPerPage,pageFunct
 
     let pages = [] //se guarda en unarray para ir imprimiendo cada boton con su numero
 
-    for (let i = 1; i <= Math.ceil(numberGames/ numberPerPage) ; i++) {
+    for (let i = 1; i <= Math.ceil(numberGames / numberPerPage) ; i++) {
         pages.push(i)  
     }
+    useEffect(()=>{
+        
+        for (let i = 1; i <= Math.ceil(numberGames/ numberPerPage) ; i++) {
+            pages.push(i)  
+        }
+
+    },[numberGames,numberPerPage,pageFunction])
+
 
     return (
     <React.Fragment>

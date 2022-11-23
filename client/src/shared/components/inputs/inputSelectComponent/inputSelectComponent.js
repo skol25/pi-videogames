@@ -11,17 +11,18 @@ export default function InputSelectComponent({contentSelect,selectFunction,textD
 
   return (
     <React.Fragment>
-    <select onChange={selectFunction} >
-        <option selected value={textDefault}>{textDefault}</option>
-        {contentSelect && contentSelect.map((item)=>{
+      <div className='select-bg '>
+        <select className='select-bg' onChange={selectFunction} >
+          <option selected value={textDefault}>{textDefault}</option>
+          {contentSelect && contentSelect.map((item)=>{
                return(
-                   <option value={item.name}>{item.name}</option>
+                   <option className='select-option' value={item.name}>{item.name}</option>
 
                )
 
         })}
-    </select>
-    
+        </select>
+      </div>
     </React.Fragment>
   )
 }

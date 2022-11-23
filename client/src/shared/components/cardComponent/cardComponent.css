@@ -9,7 +9,13 @@
     border: 1px solid var(--main-purple);
     box-shadow: 6px 6px 12px #8072e4,
              -6px -6px 12px #8072e4;
-             border-radius: 5px;
+    border-radius: 5px;
+}
+.card:hover{
+    border: 1px solid #9287e2;
+    box-shadow: 6px 6px 12px #a098de,
+             -6px -6px 12px #a098de;
+             background-color:#525252;
 }
 
 .card-text{

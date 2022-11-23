@@ -9,10 +9,23 @@
     justify-content: center;
 
 }
-
+.home-container{
+    position: relative;
+}
 
 
 .home-card-block{
     margin: 5px;
     display: flex;
+}
+.home-filter-bg{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.home-filter-buttons{
+
+    display: flex;
+    
+
 }

@@ -195,20 +195,28 @@ export default function HomeComponent() {
       )
     ) 
   }
-    let selectGenreSort=(genre)=>{
-     
 
-      setvideogames(
-        videogameO.filter((item)=> item.genres.map((e)=>{
-          return e.name
-        })
-        .includes(genre.target.value)
-        
-      ).slice(
+    let selectGenreSort= async (genre)=>{
+        genre.preventDefault()
+      setSpinner(true)
+      await disp(getAllVideogames())
+      
+
+
+      let newarray = videogameO.filter((item)=> item.genres.map((e)=>{
+        return e.name
+      })
+      .includes(genre.target.value)
+      
+    )
+
+       setvideogames( newarray.slice(
         ((0) * numberPerpage),
         ((0)  * numberPerpage) + numberPerpage
-      )
-      )
+      ))
+       setvideogameO(newarray)
+      setSpinner(false)
+      
     }
 
     let openDetail = (videogameId)=>{
@@ -221,27 +229,41 @@ export default function HomeComponent() {
 
   return (
     <React.Fragment>
-      {spinner && <SpinnerComponent/>}
-      <InputSearchComponent searchValue={search} setSearchValue={setSearch} placeHolder={'Skyrim...'}/>
-      <InputSelectComponent contentSelect={getGenres} selectFunction={selectGenreSort}  textDefault={'selecciona un genero'}/>
       
-      <button onClick={sortAZ}> A-Z</button>
-      <button onClick={sortZA}> Z-A</button>
-      <button onClick={sortRating05}> 0-5</button>
-      <button onClick={sortDBtrue}>creados</button>
-      <button onClick={sortDBfalse}>no creados</button>
+      <div className='home-filter-bg'>
+
+      <div>
+        <InputSearchComponent searchValue={search} setSearchValue={setSearch} placeHolder={'Skyrim...'}/>
+      </div>
+        <InputSelectComponent contentSelect={getGenres} selectFunction={selectGenreSort}  textDefault={'selecciona un genero'}/>
       
-      <ButtonLpComponent functo={sortRating50} textbutton={'5-0'} />
-      <button onClick={reset}> Reset</button>
+      <div className='home-filter-buttons'>
+        <div>
+          <ButtonLpComponent functo={sortZA} textbutton={'Z-A'} />
+          <ButtonLpComponent functo={sortAZ} textbutton={'A-Z'} />
+          <ButtonLpComponent functo={sortRating50} textbutton={'5-0'} />
+          <ButtonLpComponent functo={sortRating05} textbutton={'0-5'} />
+
+        </div>
+        <div>
+          <ButtonLpComponent functo={sortDBtrue} textbutton={'creados'} />
+          <ButtonLpComponent functo={sortDBfalse} textbutton={'no creados'} />
+          <ButtonLpComponent functo={reset} textbutton={'Reset'} />
+        </div>
+      </div>
+
+
+      </div>
+      
         
 
       <div className='home-container'>
-        
+      {spinner && <SpinnerComponent/>}
         {getVideogames.length===0 && <CoverNotfoundComponent />}
 
 
 
-        {videogames &&  <PaginationComponent numberGames={getVideogames.length} numberPerPage={numberPerpage} pageFunction={pagin}/>}
+        {videogameO &&  <PaginationComponent numberGames={videogameO.length} numberPerPage={numberPerpage} pageFunction={pagin}/>}
        
         </div>
         <div className='container'>  

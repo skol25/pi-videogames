@@ -21,7 +21,7 @@ export default function InputSearchComponent({searchValue,setSearchValue,placeHo
                 value={searchValue}
             />
             
-            <span class="material-symbols-outlined icon-color">
+            <span className="material-symbols-outlined icon-color">
                 search
             </span>
            

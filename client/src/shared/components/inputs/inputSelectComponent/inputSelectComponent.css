@@ -1,0 +1,19 @@
+.select-bg {
+
+    position: relative;
+    font-family: Arial;
+    background-color: aqua;
+    width: 150px;
+    border-style: dotted;
+    
+
+}
+
+.select-bg select{
+
+    display: none;
+}
+.select-option{
+    background-color: aqua;
+
+}

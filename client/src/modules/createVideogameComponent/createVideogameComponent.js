@@ -46,6 +46,7 @@ export default function CreateVideogameComponent() {
  */
 
   let handleSelectGenre=(e)=>{
+    e.preventDefault()
    let value = e.target.value
     
     setfrom(prev=>({
@@ -56,7 +57,7 @@ export default function CreateVideogameComponent() {
   }
 
   let deletegenre=(genre)=>{
-    
+    genre.preventDefault()
     setfrom(prev=>({
       ...prev,
       genres:form.genres.filter((e)=> e !== genre)
@@ -67,6 +68,7 @@ export default function CreateVideogameComponent() {
  * manejar input select de plataformas 
  */
   let handleSelectPlatform=(e)=>{
+    e.preventDefault()
     let value = e.target.value
      
      setfrom(prev=>({
@@ -77,6 +79,7 @@ export default function CreateVideogameComponent() {
    }
  
    let deletePlatform=(plat)=>{
+    plat.preventDefault()
      
      setfrom(prev=>({
        ...prev,
