@@ -2,7 +2,8 @@ const axios = require('axios');
 const {Genre,Videogame} = require('../db')
 const genreService = require('../services/genres.service')
 
-const {Op}=require('sequelize')
+const {Op}=require('sequelize');
+const { raw } = require('body-parser');
 require('dotenv').config();
 
 const {
@@ -62,7 +63,7 @@ module.exports = {
                  */
                 
                 let dbVideogames = await Videogame.findAll({
-                    attributes:["id","name"],
+                    attributes:["id","name","rating"],
                     
                     include: {
                         model:Genre,
@@ -75,7 +76,7 @@ module.exports = {
                    
                 })
                 
-
+                console.log(dbVideogames.dataValues)
                dbVideogames= dbVideogames.map(element => {
 
                     return {
@@ -162,26 +163,57 @@ module.exports = {
         
                 //primero buscar en la base de datos el id 
 
+                // let dbVideogames = await Videogame.findAll({
+                //     attributes:["id","name"],
+                    
+                //     include: {
+                //         model:Genre,
+                //         attributes:["name"],
+                //         //esto hace que no agrege la de la tabla relacional
+                //         through:{
+                //             attributes:[]
+                //         }
+                //     }
+                   
+                // })
+
 
 
             let responseDB = await Videogame.findOne({
                 where:{id:idVideogame},
                 include: {
                     model:Genre,
-                    attributes:["name","id"],
+                    attributes:["id","name"],
                     //esto hace que no agrege la de la tabla relacional
                     through:{
                         attributes:[]
-                    }
+                    },
+                    nest: true,
+                    raw:true
                 }
-               
+                
+                
+        
             })
 
+            // responseDB = {responseDB,image:"https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e0aebcf5-946d-44a7-bb9e-62e9964adb2b/dapiflk-1d064c11-b366-4a64-9d24-30a650ba2847.png/v1/fill/w_1024,h_576,q_80,strp/gamecube_controller_minimalist_wallpaper_by_brulescorrupted_dapiflk-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc2IiwicGF0aCI6IlwvZlwvZTBhZWJjZjUtOTQ2ZC00NGE3LWJiOWUtNjJlOTk2NGFkYjJiXC9kYXBpZmxrLTFkMDY0YzExLWIzNjYtNGE2NC05ZDI0LTMwYTY1MGJhMjg0Ny5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.HNm253TIHOwbreSdXl4rIRMDuYigSQtJ0Pwv-9H6RHY"}
+            //let image = {image:"https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e0aebcf5-946d-44a7-bb9e-62e9964adb2b/dapiflk-1d064c11-b366-4a64-9d24-30a650ba2847.png/v1/fill/w_1024,h_576,q_80,strp/gamecube_controller_minimalist_wallpaper_by_brulescorrupted_dapiflk-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc2IiwicGF0aCI6IlwvZlwvZTBhZWJjZjUtOTQ2ZC00NGE3LWJiOWUtNjJlOTk2NGFkYjJiXC9kYXBpZmxrLTFkMDY0YzExLWIzNjYtNGE2NC05ZDI0LTMwYTY1MGJhMjg0Ny5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.HNm253TIHOwbreSdXl4rIRMDuYigSQtJ0Pwv-9H6RHY"}
+            // responseDB = Object.assign(responseDB,{image:"https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e0aebcf5-946d-44a7-bb9e-62e9964adb2b/dapiflk-1d064c11-b366-4a64-9d24-30a650ba2847.png/v1/fill/w_1024,h_576,q_80,strp/gamecube_controller_minimalist_wallpaper_by_brulescorrupted_dapiflk-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NTc2IiwicGF0aCI6IlwvZlwvZTBhZWJjZjUtOTQ2ZC00NGE3LWJiOWUtNjJlOTk2NGFkYjJiXC9kYXBpZmxrLTFkMDY0YzExLWIzNjYtNGE2NC05ZDI0LTMwYTY1MGJhMjg0Ny5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.HNm253TIHOwbreSdXl4rIRMDuYigSQtJ0Pwv-9H6RHY"})
+           
+        
+            
+            
+            if(responseDB){
+                // responseDB.dataValues.genres=responseDB.dataValues.genres.map((item)=>{
+                //     return item.dataValues.name
+                // })
+               console.log(responseDB)
 
-            if(responseDB) return responseDB
+            return responseDB
+           }
             
             const response = await axios.get(`https://api.rawg.io/api/games/${idVideogame}?key=${API_KEY}`)
-
+           
             if(response.data){
                 let element = response.data
                 const detailVideogame = {
@@ -190,17 +222,24 @@ module.exports = {
                     image : element.background_image,
                     released : element.released,
                     rating : element.rating,
-                    description : element.description,
-                    platforms : element.parent_platforms,
-                    genres : element.genres 
-                
+                    description : element.description_raw,
+                    platforms : element.parent_platforms.map((platform)=>{
+                        return platform.platform.name
+                        
+                    }),
+                    genres : element.genres.map((genre)=>{
 
+                          return {
+                            id:genre.id,
+                            name:genre.name
+                        }
+                    
+                    }) 
+            
                 }
                 return detailVideogame
             }
             else{
-
-
 
                 throw Error('El id no coincide con ningun juego guardado.')
             }
@@ -226,13 +265,28 @@ module.exports = {
         let {name,description,released,rating,genres,platforms}=form
        
         try {
+
+            //VALIDACION FORMULARIO
+            /**
+             * ID: * No puede ser un ID de un videojuego ya existente en la API rawg
+                Nombre *
+                Descripción *
+                Fecha de lanzamiento
+                Rating
+                Plataformas *
+             */
+
+
+
+
+
             //primero hay que traer los generos
             
             //primero taer los id de los generos que yo seleccione en el formulario
             //genres = ['shooter','arcade'] traer esos id y setear en la tabla relacional el id del juego con cada genero
             
             //e es cada genero de la lista 
-            let genresss = await genreService.listGenres()
+             await genreService.listGenres()
 
             //con esto me traigo los id de los generos que me viene selecionados del front 
             let idOfGenre = await Genre.findAll({
@@ -250,7 +304,7 @@ module.exports = {
             defaults:{
                 name:name,
                 description:description,
-                releaseDate:released,
+                released:released,
                 rating:rating,
                 platforms:platforms,
             },
@@ -283,11 +337,7 @@ module.exports = {
             
             //ahora las plataformas ya las tengo 
             //queda guardar los id con el id generado 
-            
 
-
-            
-           
             return videogame
             
         } catch (error) {

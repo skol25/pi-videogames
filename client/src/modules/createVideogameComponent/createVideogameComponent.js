@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './createVideogameComponent.css'
 import { useDispatch, useSelector } from 'react-redux'
 import * as actions from '../../redux/actions'
+import InputSelectComponent from '../../shared/components/inputs/inputSelectComponent/inputSelectComponent'
+import ButtonLpComponent from '../../shared/components/buttons/buttonLpComponent/buttonLpComponent'
 
 
 /**
@@ -19,9 +21,6 @@ import * as actions from '../../redux/actions'
 export default function CreateVideogameComponent() {
 
   const disp = useDispatch()
-  
-  let [genres,setGenres] = useState([])
-  let [platforms,setPlatforms] = useState([])
 
   let allGenres = useSelector((state=>state.genres))
   let allPlatforms = useSelector((state=>state.platforms))
@@ -30,24 +29,67 @@ export default function CreateVideogameComponent() {
   let [form,setfrom] = useState({
     name:'', //listo
     description:'',//listo
-    releasedDate:'',//listo
+    released:'',//listo
     rating:0, //listo
-    genres:[],
-    platforms:[]
+    genres:[],//listo
+    platforms:[]//listo
   })
 
-
-  useEffect(() => {
-    disp(actions.getAllPlatforms())
-    disp(actions.getAllGenres())
-
-}, [])
   useEffect(()=>{
-    setGenres([...allGenres])
-    setPlatforms([...allPlatforms])
 
-  },[])
+    disp(actions.getAllGenres())
+    disp(actions.getAllPlatforms())
+
+  },[disp])
+/**
+ * funciones para select
+ */
+
+  let handleSelectGenre=(e)=>{
+   let value = e.target.value
     
+    setfrom(prev=>({
+      ...prev,
+      genres:form.genres.concat(value)
+    }))
+   
+  }
+
+  let deletegenre=(genre)=>{
+    
+    setfrom(prev=>({
+      ...prev,
+      genres:form.genres.filter((e)=> e !== genre)
+    }))
+  }
+/**
+ * 
+ * manejar input select de plataformas 
+ */
+  let handleSelectPlatform=(e)=>{
+    let value = e.target.value
+     
+     setfrom(prev=>({
+       ...prev,
+       platforms:form.platforms.concat(value)
+     }))
+    
+   }
+ 
+   let deletePlatform=(plat)=>{
+     
+     setfrom(prev=>({
+       ...prev,
+       platforms:form.platforms.filter((e)=> e !== plat)
+     }))
+   }
+
+
+
+/**
+ * 
+ * funciones para inputs normales 
+ */
 
   let handleChange=(e)=>{
     e.preventDefault()
@@ -55,14 +97,12 @@ export default function CreateVideogameComponent() {
     newform[e.target.name] = e.target.value
     setfrom((prev)=>({...prev,[e.target.name]:e.target.value})) 
 }
-
+ 
 
   let handleSubmit=(e)=>{
     e.preventDefault()  
     console.log(form)
-    
-    // disp(actions.createVideogame(form))
-    
+    disp(actions.createVideogame(form))
   }
 
   return (
@@ -81,54 +121,50 @@ export default function CreateVideogameComponent() {
           </label>
 
           <label className=''>
-            Lanzamiento:<input type={'date'} name={'releasedDate'} value={form.releasedDate} onChange={(e)=>handleChange(e)} />
+            Lanzamiento:<input type={'date'} name={'released'} value={form.released} onChange={(e)=>handleChange(e)} />
           </label>
+
+
+          <label>
+        Generos:<InputSelectComponent contentSelect={allGenres} selectFunction={handleSelectGenre} textDefault={'selecciona un genero'}/>
+       
+        {form.genres.map((item)=>{
+          return (
+            <div>
+              <p>{item}</p>
+              <button onClick={()=>deletegenre(item)} >X</button>
+            </div>
+          )
+        })}
+      </label>
+
+      <label>
+      Plataformas:<InputSelectComponent contentSelect={allPlatforms} selectFunction={handleSelectPlatform} textDefault={'selecciona sus plataformas'}/>
+     
+      {form.platforms.map((item)=>{
+        return (
+          <div>
+            <p>{item}</p>
+            <button onClick={()=>deletePlatform(item)} >X</button>
+          </div>
+        )
+      })}
+    </label>
         
-          <label className=''>
-          
-          Generos:
-          
-          <select   onChange={(e)=>handleChange(e)} multiple={true} 
-          >
-          {genres.map((item)=>{
-            return(
-              <option value={item.name}>{item.name}</option>
-            )
-          })}
-        
-          
-          </select>
-          
-          
-          </label>
 
           <label className=''>
+            Descripción:
+            </label>
+            <textarea type={'text'} name={'description'} value={form.description} onChange={(e)=>handleChange(e)} className='form-textarea'>
+                Hello there, this is some text in a text area
+            </textarea>
           
-          plataformas:
-          
-          <select onChange={(e)=>handleChange(e)} multiple={true} value={['pc','xbox']} >
 
-            {platforms.map((item)=>{
-              return(
-                <option value={item.name}>{item.name}</option>
-              )
-            })}
-          
-          </select>
-
-          </label>
-
-          <label className=''>
-            Descripción:<input type={'text'} name={'description'} value={form.description} onChange={(e)=>handleChange(e)} />
-          </label>
-          <textarea>
-            Hello there, this is some text in a text area
-          </textarea>
-
-          <button type="submit">Create</button>
+            <ButtonLpComponent typeButton={'submit'} textbutton={'Crear'}/>
            
         </form>
-            
+        
+        
         </div>
     </React.Fragment>
   )

@@ -1,14 +1,49 @@
 @import url('../../../shared/assets/GlobalVariables.css');
 
 .detail-bg{
+    position: absolute;
     background-color: var(--main-gray);
-    display: inline-block;
-    max-width: 240px;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+    width: auto;
+    margin-right: 2rem;
+    height: auto;
+    padding: 20px;
     
 }
 
 .detail-image{
-    max-width: 20px;
-    
+    position: relative;
+    width: 100%;
+    max-height: 200px;
+}
 
+.detail-rating-icon{
+
+    color: rgb(199, 197, 47);
+}
+
+
+
+
+.detail-description{
+    display: block;
+    width: auto;
+    height: 100px;
+    overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+.detail-description::-webkit-scrollbar{
+    display: none;
+    width: 5px;
+  height: 10px;
+  background-color: var(--main-gray);
+}
+.detail-description:hover::-webkit-scrollbar{
+    display: initial;
+}
+.detail-description:hover::-webkit-scrollbar-thumb{
+    background-color: var(--main-purple);
 }

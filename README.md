@@ -193,3 +193,24 @@ __IMPORTANTE__: No está permitido utilizar los filtrados, ordenamientos y pagin
 - [ ] Al menos tener un componente del frontend con sus tests respectivos
 - [ ] Al menos tener una ruta del backend con sus tests respectivos
 - [ ] Al menos tener un modelo de la base de datos con sus tests respectivos
+
+
+
+COSAS QUE FALTAN 
+IMPORTANTES
+
+FILTROS 
+-funcionalidad del search
+-ver el error del paginado con respecto a los filtros 
+
+DETALLE DE UN JUEGO ---***in progress
+-arreglarpara que venga igual de la base de datos que en la api 
+-estilos en el componente
+-acomodar todo
+
+CREAR VIDEOJUEGO
+-acomodar los estilos 
+
+MENOS IMPORTANTES
+
+REVISAR LOS WARNINGS 

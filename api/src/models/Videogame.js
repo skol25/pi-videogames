@@ -36,8 +36,8 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
 
-    releaseDate: {
-      type: DataTypes.DATE,
+    released: {
+      type: DataTypes.STRING,
       defaultValue: DataTypes.NOW
     },
 

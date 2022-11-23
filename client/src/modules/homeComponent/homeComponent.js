@@ -34,9 +34,6 @@ export default function HomeComponent() {
   let getGenres = useSelector((state) => state.genres) //busca el estado global de los generos 
 
   
-  
-   
-  
    useEffect(()=>{
     (async () => {
 
@@ -226,7 +223,7 @@ export default function HomeComponent() {
     <React.Fragment>
       {spinner && <SpinnerComponent/>}
       <InputSearchComponent searchValue={search} setSearchValue={setSearch} placeHolder={'Skyrim...'}/>
-      <InputSelectComponent contentSelect={getGenres} selectFunction={selectGenreSort} />
+      <InputSelectComponent contentSelect={getGenres} selectFunction={selectGenreSort}  textDefault={'selecciona un genero'}/>
       
       <button onClick={sortAZ}> A-Z</button>
       <button onClick={sortZA}> Z-A</button>

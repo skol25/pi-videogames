@@ -17,8 +17,8 @@ export default function rootReducer(state=initialState,action){
 
         case 'CREATE_VIDEOGAME' :
             return{
-
-            ...state,videogames:[...state.videogames,{...action.payload}]
+            ...state,
+            videogames:[...state.videogames,{...action.payload}]
             }
 
         case 'GET_DETAIL_VIDEOGAME':
@@ -36,7 +36,8 @@ export default function rootReducer(state=initialState,action){
 
         case 'GET_ALL_PLATFORMS':
             return{
-                ...state,platforms:[...state.platforms,{...action.payload}]
+                ...state,
+                platforms:action.payload
             }
     
 

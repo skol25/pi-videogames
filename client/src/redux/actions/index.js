@@ -53,6 +53,9 @@ export const getAllPlatforms = () => {
     return function(dispatch){
         return axios.get('http://localhost:3001/api/v1/platforms')
         .then(response => dispatch({type:GET_ALL_PLATFORMS,payload:response.data}))
+        .catch((err)=>{
+            return err
+        })
     }
 }
 

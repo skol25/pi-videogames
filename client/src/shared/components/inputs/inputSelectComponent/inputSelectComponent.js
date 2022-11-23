@@ -6,13 +6,13 @@ import React from 'react'
  * @param {selected} funcionque selecciona el item que se mostro 
  */
 
-export default function InputSelectComponent({contentSelect,selectFunction}) {
+export default function InputSelectComponent({contentSelect,selectFunction,textDefault}) {
 
 
   return (
     <React.Fragment>
     <select onChange={selectFunction} >
-        <option selected value={'selecciona un genero'}>selecciona un genero</option>
+        <option selected value={textDefault}>{textDefault}</option>
         {contentSelect && contentSelect.map((item)=>{
                return(
                    <option value={item.name}>{item.name}</option>
