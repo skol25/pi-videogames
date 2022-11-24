@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {  useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { getAllGenres, getAllVideogames } from '../../redux/actions'
+import { getAllGenres, getAllVideogames, getAllVideogamesByname } from '../../redux/actions'
 import ButtonLpComponent from '../../shared/components/buttons/buttonLpComponent/buttonLpComponent'
 
 import CardComponent from '../../shared/components/cardComponent/cardComponent'
@@ -22,9 +22,9 @@ export default function HomeComponent() {
 
 
   let [spinner,setSpinner] = useState(true) //state del spinner
-  let [search,setSearch] = useState() //state para el input 
   let numberPerpage = 15 //numero de videojuegos por pagina
 
+  let [search,setSearch] = useState()
 
   
 
@@ -143,6 +143,20 @@ export default function HomeComponent() {
   )
  }
 
+ //funcion del search
+
+ let onChangeSetInput=(e)=>{
+
+  setSearch(e.target.value)
+  
+}
+//funcion
+let sendInput=()=>{
+
+  
+  disp(getAllVideogamesByname(search))
+
+}
 
    let sortAZ = ()=>{
       //obtengo el valor con genre.target.value ya es un input 
@@ -196,24 +210,31 @@ export default function HomeComponent() {
     ) 
   }
 
-    let selectGenreSort= async (genre)=>{
+    let selectGenreSort=  (genre)=>{
+      
+      
+
       setSpinner(true)
-      await disp(getAllVideogames())
+       
       
-
-
-      let newarray = videogameO.filter((item)=> item.genres.map((e)=>{
-        return e.name
-      })
-      .includes(genre.target.value)
-      
-    )
-
-       setvideogames( newarray.slice(
+      setvideogames(
+        videogameO.filter((item)=> item.genres.map((e)=>{
+          return e.name
+        })
+        .includes(genre.target.value)
+        
+      ).slice(
         ((0) * numberPerpage),
         ((0)  * numberPerpage) + numberPerpage
+      )
+
+      )
+      
+        setvideogameO(videogameO.filter((item)=> item.genres.map((e)=>{
+          return e.name
+        })
+        .includes(genre.target.value)
       ))
-       setvideogameO(newarray)
       setSpinner(false)
       
     }
@@ -232,7 +253,8 @@ export default function HomeComponent() {
       <div className='home-filter-bg'>
 
       <div>
-        <InputSearchComponent searchValue={search} setSearchValue={setSearch} placeHolder={'Skyrim...'}/>
+        <InputSearchComponent searchValue={search} onChangeSetInput={onChangeSetInput} placeHolder={'Skyrim...'}/>
+        <ButtonLpComponent functo={sendInput} textbutton={'enviar'} />
       </div>
         <InputSelectComponent contentSelect={getGenres} selectFunction={selectGenreSort}  textDefault={'selecciona un genero'}/>
       
@@ -241,6 +263,7 @@ export default function HomeComponent() {
           <div className=''>
 
           <ButtonLpComponent functo={sortZA} textbutton={'Z-A'} />
+          
           <ButtonLpComponent functo={sortAZ} textbutton={'A-Z'} />
 
           </div>

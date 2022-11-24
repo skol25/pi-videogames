@@ -46,7 +46,6 @@ export default function CreateVideogameComponent() {
  */
 
   let handleSelectGenre=(e)=>{
-    e.preventDefault()
    let value = e.target.value
     
     setfrom(prev=>({
@@ -57,7 +56,6 @@ export default function CreateVideogameComponent() {
   }
 
   let deletegenre=(genre)=>{
-    genre.preventDefault()
     setfrom(prev=>({
       ...prev,
       genres:form.genres.filter((e)=> e !== genre)
@@ -68,6 +66,7 @@ export default function CreateVideogameComponent() {
  * manejar input select de plataformas 
  */
   let handleSelectPlatform=(e)=>{
+
     e.preventDefault()
     let value = e.target.value
      
@@ -79,15 +78,15 @@ export default function CreateVideogameComponent() {
    }
  
    let deletePlatform=(plat)=>{
-    plat.preventDefault()
      
      setfrom(prev=>({
        ...prev,
        platforms:form.platforms.filter((e)=> e !== plat)
      }))
+
    }
 
-
+let back ={ background: 'blue'}
 
 /**
  * 
@@ -111,62 +110,71 @@ export default function CreateVideogameComponent() {
   return (
     <React.Fragment>
 
-        <div className='form-container cardbg '>
+        <div className='form-container'>
+
+        <div className='from-bg'>
+
+              <h2>Agregue su juego</h2>
 
         <form className='form-center' onSubmit={handleSubmit}>
         
-          <label className=''>
-            Nombre:<input type={'text'} name={'name'} value={form.name} onChange={(e)=>handleChange(e)} />
+          <label className='mb-2'>
+            Nombre:
+          <input className='form-input' type={'text'} name={'name'} value={form.name} onChange={(e)=>handleChange(e)} />
           </label>
 
-          <label className=''>
-            Rating:<input type={'number'} name={'rating'} value={form.rating} onChange={(e)=>handleChange(e)} />
+          <label className='mb-2'>
+            Rating:
+          <input className='form-input' type={'number'} name={'rating'} value={form.rating} onChange={(e)=>handleChange(e)} />
           </label>
 
-          <label className=''>
-            Lanzamiento:<input type={'date'} name={'released'} value={form.released} onChange={(e)=>handleChange(e)} />
+          <label className='mb-2'>
+            Lanzamiento:
+            <input className='form-input' type={'date'} name={'released'} value={form.released} onChange={(e)=>handleChange(e)} />
           </label>
 
-
-          <label>
-        Generos:<InputSelectComponent contentSelect={allGenres} selectFunction={handleSelectGenre} textDefault={'selecciona un genero'}/>
-       
-        {form.genres.map((item)=>{
-          return (
-            <div>
-              <p>{item}</p>
-              <button onClick={()=>deletegenre(item)} >X</button>
-            </div>
-          )
-        })}
-      </label>
-
-      <label>
-      Plataformas:<InputSelectComponent contentSelect={allPlatforms} selectFunction={handleSelectPlatform} textDefault={'selecciona sus plataformas'}/>
-     
-      {form.platforms.map((item)=>{
-        return (
           <div>
-            <p>{item}</p>
-            <button onClick={()=>deletePlatform(item)} >X</button>
-          </div>
-        )
-      })}
-    </label>
-        
 
+          <label className='form-select'>
+            Generos:<InputSelectComponent contentSelect={allGenres} selectFunction={handleSelectGenre} textDefault={'selecciona un genero'}/>
+            </label>
+            {form.genres.map((item)=>{
+            return (
+              <div className='form-select-item' >
+                <p>{item}</p>
+                <button onClick={()=>deletegenre(item)} >X</button>
+              </div>
+            )
+            })}
+          
+
+          <label className='form-select'>
+            Plataformas:<InputSelectComponent contentSelect={allPlatforms} selectFunction={handleSelectPlatform} textDefault={'selecciona sus plataformas'}/>
+          </label>
+            {form.platforms.map((item)=>{
+            return (
+              <div className='form-select-item' > 
+                <p>{item}</p><button onClick={()=>deletePlatform(item)} >X</button>
+              </div>
+            )
+            })}
+            
+
+          </div>
+        
+        
           <label className=''>
             Descripción:
             </label>
             <textarea type={'text'} name={'description'} value={form.description} onChange={(e)=>handleChange(e)} className='form-textarea'>
-                Hello there, this is some text in a text area
+                Agrega tu descripcion aqui.
             </textarea>
-          
-
+          <div className='from-button'>
             <ButtonLpComponent typeButton={'submit'} textbutton={'Crear'}/>
+          </div>
            
         </form>
-        
+        </div>
         
         </div>
     </React.Fragment>

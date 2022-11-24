@@ -2,6 +2,7 @@ import axios from "axios";
 
 // Aca deben declarar las variables donde tengan el action types.
 export const GET_ALL_VIDEOGAMES = "GET_ALL_VIDEOGAMES";
+export const GET_ALL_VIDEOGAMES_BY_NAME = "GET_ALL_VIDEOGAMES_BY_NAME";
 export const CREATE_VIDEOGAME = "CREATE_VIDEOGAME";
 export const GET_ALL_GENRES = "GET_ALL_GENRES";
 export const GET_ALL_PLATFORMS = "GET_ALL_PLATFORMS";
@@ -15,6 +16,18 @@ export const getAllVideogames = () => {
 
         return axios.get('http://localhost:3001/api/v1/videogames')
         .then(response=>dispatch({type:GET_ALL_VIDEOGAMES,payload:response.data}))
+        .catch((err)=>{
+
+            return err
+        })
+       
+    }
+};
+export const getAllVideogamesByname = (videogameName) => { 
+    return function(dispatch){
+
+        return axios.get(`http://localhost:3001/api/v1/videogames?name=${videogameName}`)
+        .then(response=>dispatch({type:GET_ALL_VIDEOGAMES_BY_NAME,payload:response.data}))
         .catch((err)=>{
 
             return err

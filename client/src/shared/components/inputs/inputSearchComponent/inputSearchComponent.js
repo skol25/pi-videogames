@@ -1,13 +1,9 @@
 import React from 'react'
 import './inputSearchComponent.css'
 
-export default function InputSearchComponent({searchValue,setSearchValue,placeHolder}) {
+export default function InputSearchComponent({searchValue,onChangeSetInput,placeHolder}) {
 
-    let onChangeSetInput=(e)=>{
-
-        setSearchValue(e.target.value)
-
-    }
+    
 
   return (
     <React.Fragment>

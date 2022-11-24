@@ -14,6 +14,11 @@ export default function rootReducer(state=initialState,action){
             ...state,
             videogames:action.payload
         } 
+        case 'GET_ALL_VIDEOGAMES_BY_NAME':
+            return{
+                ...state,
+                videogames:action.payload
+            }
 
         case 'CREATE_VIDEOGAME' :
             return{

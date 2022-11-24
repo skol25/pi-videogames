@@ -76,7 +76,7 @@ module.exports = {
                    
                 })
                 
-                console.log(dbVideogames.dataValues)
+               
                dbVideogames= dbVideogames.map(element => {
 
                     return {
@@ -125,6 +125,7 @@ module.exports = {
                         return{
                             id:element.id, 
                             name:element.name,
+                            rating:element.rating,
                             image:element.background_image,
                             genres:element.genres.map(genre=>{
                                 return {

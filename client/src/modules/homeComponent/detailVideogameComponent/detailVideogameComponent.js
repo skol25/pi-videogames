@@ -15,9 +15,9 @@ export default function DetailVideogameComponent(props) {
     let description = useSelector(state=>state.VideogameDetail)
   
 
-    useEffect( () => {
+    useEffect( async() => {
         setSpinner(true)
-        disp(getDetailVideogame(idDetail))
+        await disp(getDetailVideogame(idDetail))
         setSpinner(false)
     }, [disp, idDetail])
    

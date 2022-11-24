@@ -1,30 +1,67 @@
-
-.cardbg{
+@import url('../../shared/assets/GlobalVariables.css');
+.form-container{
     
-    background-color: #e8e8e8;
-    border: 1px solid #e8e8e8;
-    box-shadow: 6px 6px 12px #c5c5c5,
-                -6px -6px 12px #ffffff;
-    border-radius: 10px;
-    padding: 20px;
-    display: inline-block;
-
+    display: flex;
+    justify-content: center;
+    justify-content: center;
+   
 }
+
 
 .form-textarea{
 
     min-width: 100%;
     min-height: 50px;
+    width: 100%;
 
+}
 
+.from-bg{
+
+    padding: 20px;
+    background-color: #e8e8e8;
+    border: 1px solid #e8e8e8;
+    box-shadow: 6px 6px 12px #c5c5c5,
+                -6px -6px 12px #ffffff;
+    border-radius: 10px;
 
 }
 
 
+.form-input{
+    width: 100%;
+    padding: 2px;
+    
+}
 
 .form-center{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+    padding: 20px;
+
+}
+.mb-2{
+    margin-bottom: 10px;
+}
+.from-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.form-select{
+    display: flex;
+    width: 100%;
+}
+
+.form-select-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: var(--main-purple);
+    margin-bottom: 2px solid var(--main-black);
 }
